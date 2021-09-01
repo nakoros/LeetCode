@@ -36,29 +36,25 @@ public class No_113 {
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> result = new ArrayList<>();
 
-        if (root != null) {
-            pathSumSearchTree(root, result, new ArrayList<>(), 0, targetSum);
-        }
+        pathSumSearchTree(root, result, new ArrayList<>(), 0, targetSum);
         return result;
     }
 
     public void pathSumSearchTree(TreeNode cur, List<List<Integer>> result, List<Integer> path, int sum, int targetSum) {
+        if(cur==null)
+            return;
         sum += cur.val;
         path.add(cur.val);
         if (cur.left == null && cur.right == null) {
             if (sum == targetSum) {
                 result.add(new ArrayList<>(path));
             }
+            path.remove(path.size() - 1);
             return;
         }
-        if (cur.left != null) {
-            pathSumSearchTree(cur.left, result, path, sum, targetSum);
-            path.remove(path.size() - 1);
-        }
-        if (cur.right != null) {
-            pathSumSearchTree(cur.right, result, path, sum, targetSum);
-            path.remove(path.size() - 1);
-        }
+        pathSumSearchTree(cur.left, result, path, sum, targetSum);
+        pathSumSearchTree(cur.right, result, path, sum, targetSum);
+        path.remove(path.size() - 1);
         return;
     }
 }
